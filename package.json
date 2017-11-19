@@ -1,6 +1,6 @@
 {
   "name": "node-asg-tools",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Use AWS ASG as an oracle to run useful things on all servers",
   "main": "index.js",
   "scripts": {
