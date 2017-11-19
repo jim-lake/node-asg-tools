@@ -73,28 +73,36 @@ function fetchInstances(done) {
   },
   (done) => {
     const ec2 = new AWS.EC2(g_aws_config);
-    const params = {
-      InstanceIds: _.pluck(auto_scale_group.Instances,'InstanceId'),
-    };
-    ec2.describeInstances(params,(err,results) => {
-      if (err) {
-        error_log("describeInstances err:",err);
-      } else {
-        _.each(results.Reservations,(reservation) => {
-          _.each(reservation.Instances,(instance) => {
-            const state = instance.State.Name;
-            if (state == 'running') {
-              instance_list.push({
-                instance_id: instance.InstanceId,
-                private_ip: instance.PrivateIpAddress,
-                public_ip: instance.PublicIpAddress,
-              });
-            }
+
+    const id_list = _.pluck(auto_scale_group.Instances,'InstanceId');
+    id_list.filter(i => i !== g_instance_id);
+
+    if (id_list.length > 0) {
+      done(null);
+    } else {
+      const params = {
+        InstanceIds: id_list,
+      };
+      ec2.describeInstances(params,(err,results) => {
+        if (err) {
+          error_log("describeInstances err:",err);
+        } else {
+          _.each(results.Reservations,(reservation) => {
+            _.each(reservation.Instances,(instance) => {
+              const state = instance.State.Name;
+              if (state == 'running') {
+                instance_list.push({
+                  instance_id: instance.InstanceId,
+                  private_ip: instance.PrivateIpAddress,
+                  public_ip: instance.PublicIpAddress,
+                });
+              }
+            });
           });
-        });
-      }
-      done(err);
-    });
+        }
+        done(err);
+      });
+    }
   }],
   (err) => {
     done(err,instance_list);
@@ -209,7 +217,7 @@ function get_auto_scale_group(done) {
   (done) => {
     if (g_config.asg_name) {
       done();
-    } else if (g_instance_id) {
+    } else {
       get_instance_id((err,id) => {
         instance_id = id;
         done(err);
@@ -229,7 +237,7 @@ function get_auto_scale_group(done) {
       } else {
         if (instance_id) {
           _.every(data.AutoScalingGroups,(asg) => {
-            const found_instance = _.findWhere(asg.Instances,{ InstanceId });
+            const found_instance = _.findWhere(asg.Instances,{ InstanceId: instance_id });
             if (found_instance) {
               found_asg = asg;
             }
