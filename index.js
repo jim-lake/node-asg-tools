@@ -124,7 +124,6 @@ function getInstances(done) {
 
 function eachSeries(iterator,done) {
   getInstances((err,instance_list) => {
-    console.log(instance_list);
     if (!err) {
       async.eachSeries(instance_list,iterator,done);
     } else {
@@ -150,8 +149,7 @@ function requestUntil(options,test,done) {
         body_list.push(body);
       }
 
-      if (!test(response,body)) {
-        console.log("test stopped");
+      if (test(response,body)) {
         err = 'requestUntilDone';
       }
       done(err);
@@ -176,7 +174,6 @@ function instance_request(options,instance,done) {
   }
 
   set_base_url(options,instance);
-  console.log(options);
   try {
     request(options,done);
   } catch(e) {
