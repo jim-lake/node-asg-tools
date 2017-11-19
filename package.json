@@ -1,0 +1,27 @@
+{
+  "name": "node-asg-tools",
+  "version": "0.0.2",
+  "description": "Use AWS ASG as an oracle to run useful things on all servers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "aws",
+    "asg"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jim-lake/node-asg-tools.git"
+  },
+  "author": {
+    "name": "Jim Lake"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.153.0",
+    "async": "^2.6.0",
+    "request": "^2.83.0",
+    "lodash": "3.x"
+  }
+}
