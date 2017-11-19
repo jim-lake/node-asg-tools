@@ -76,8 +76,7 @@ function fetchInstances(done) {
 
     const id_list = _.pluck(auto_scale_group.Instances,'InstanceId');
     id_list.filter(i => i !== g_instance_id);
-
-    if (id_list.length > 0) {
+    if (id_list.length == 0) {
       done(null);
     } else {
       const params = {
