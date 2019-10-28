@@ -86,8 +86,8 @@ function fetchInstances(done) {
         if (err) {
           error_log("describeInstances err:",err);
         } else {
-          _.each(results.Reservations,(reservation) => {
-            _.each(reservation.Instances,(instance) => {
+          _.forEach(results.Reservations,(reservation) => {
+            _.forEach(reservation.Instances,(instance) => {
               const state = instance.State.Name;
               if (state == 'running') {
                 instance_list.push({
