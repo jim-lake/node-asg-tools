@@ -74,7 +74,7 @@ function fetchInstances(done) {
   (done) => {
     const ec2 = new AWS.EC2(g_aws_config);
 
-    const all_id_list = _.pluck(auto_scale_group.Instances,'InstanceId');
+    const all_id_list = auto_scale_group.Instances.map(i => i.InstanceId);
     const id_list = all_id_list.filter(i => i !== g_instance_id);
     if (id_list.length == 0) {
       done(null);
