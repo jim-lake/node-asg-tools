@@ -1,10 +1,11 @@
 {
   "name": "node-asg-tools",
-  "version": "0.0.8",
+  "version": "0.0.10",
   "description": "Use AWS ASG as an oracle to run useful things on all servers",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pretty": "prettier *.js --write",
+    "lint": "eslint *.js"
   },
   "keywords": [
     "aws",
@@ -19,9 +20,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "aws-sdk": "^2.153.0",
-    "async": "^2.6.0",
-    "request": "^2.83.0",
-    "lodash": "4.x"
+    "aws-sdk": "2.557.0",
+    "async": "2.6.3",
+    "request": "2.88.0",
+    "lodash": "4.17.21"
   }
 }
