@@ -185,7 +185,6 @@ function instance_request(options, instance, done) {
 
   set_base_url(options, instance);
   try {
-    console.log('request:', options);
     request(options, done);
   } catch (e) {
     error_log('instance_request: request throw:', e);
@@ -236,13 +235,6 @@ function get_auto_scale_group(done) {
 
         const autoscaling = new AWS.AutoScaling(g_aws_config);
         autoscaling.describeAutoScalingGroups(opts, (err, data) => {
-          console.log(
-            'err, data, instance_id, asg_name',
-            err,
-            data,
-            instance_id,
-            g_config.asg_name
-          );
           if (err) {
             error_log('get_auto_scale_group: err:', err);
           } else {
